@@ -16,6 +16,8 @@ public class Remocao {
 
     System.out.println("Quantidade de linhas modificadas " + linhasModificadas );
 
+
+    connection.close();
   }
 
 

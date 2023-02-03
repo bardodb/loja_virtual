@@ -5,8 +5,8 @@ public class TesteInsercao {
 
 
     ConnectionFactory criaConexao = new ConnectionFactory();
-    Connection conexao = criaConexao.recuperarConexao();
-    PreparedStatement stmt = conexao.prepareStatement(
+    Connection connection = criaConexao.recuperarConexao();
+    PreparedStatement stmt = connection.prepareStatement(
       "INSERT INTO PRODUTO (nome, descricao) VALUES ('Mouse', 'Mouse sem fio')",
       Statement.RETURN_GENERATED_KEYS);
 
