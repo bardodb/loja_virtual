@@ -8,5 +8,7 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="mysql.connector.java" level="project" />
+    <orderEntry type="library" name="mchange.commons.java" level="project" />
+    <orderEntry type="library" name="mchange.c3p0" level="project" />
   </component>
 </module>
