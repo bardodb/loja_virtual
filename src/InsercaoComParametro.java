@@ -6,22 +6,22 @@ public class InsercaoComParametro {
 
     ConnectionFactory factory = new ConnectionFactory();
 
-    try( Connection connection = factory.recuperarConexao()){
+    try (Connection connection = factory.recuperarConexao()) {
 
-    connection.setAutoCommit(false);
+      connection.setAutoCommit(false);
 
-    try (  PreparedStatement stm = connection.prepareStatement("INSERT INTO PRODUTO (nome, descricao) VALUES(? , ?)",
-      Statement.RETURN_GENERATED_KEYS);) {
+      try (PreparedStatement stm = connection.prepareStatement("INSERT INTO PRODUTO (nome, descricao) VALUES(? , ?)",
+        Statement.RETURN_GENERATED_KEYS);) {
 
-      AdicionarVariavel("SmartTV", "45 polegadas", stm);
-      AdicionarVariavel("Radio", "Radio de Bateria", stm);
+        AdicionarVariavel("SmartTV", "45 polegadas", stm);
+        AdicionarVariavel("Radio", "Radio de Bateria", stm);
 
-      connection.commit();//se tudo der certo, vai fazer a trasnferencia pro bd
-    } catch (Exception e) {
-      e.printStackTrace();
-      System.out.println("rollback executado");
-      connection.rollback();
-    }
+        connection.commit();//se tudo der certo, vai fazer a trasnferencia pro bd
+      } catch (Exception e) {
+        e.printStackTrace();
+        System.out.println("rollback executado");
+        connection.rollback();
+      }
     }
 
   }
