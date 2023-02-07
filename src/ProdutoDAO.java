@@ -3,10 +3,12 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ProdutoDAO {
 
-  private Connection connection;
+  private final Connection connection;
 
   public ProdutoDAO(Connection connection) {
     this.connection = connection;
@@ -26,8 +28,22 @@ public class ProdutoDAO {
         while (rst.next()) {
           produto.setId(rst.getInt(1));
         }
-
       }
     }
+  }
+
+  public List<Produto> listarProdutos() throws SQLException {
+    List<Produto> produtos = new ArrayList<Produto>();
+    String sql = "SELECT ID, NOME PRODUTO, DESCRICAO FROM PRODUTO";
+    try (PreparedStatement pstm = connection.prepareStatement(sql)) {
+      pstm.execute();
+      try (ResultSet rst = pstm.getResultSet()) {
+        while (rst.next()) {
+            Produto produto = new Produto(rst.getInt(1), rst.getString(2), rst.getString(3));
+            produtos.add(produto);
+        }
+      }
+    }
+    return produtos;
   }
 }
