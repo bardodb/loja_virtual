@@ -39,11 +39,29 @@ public class ProdutoDAO {
       pstm.execute();
       try (ResultSet rst = pstm.getResultSet()) {
         while (rst.next()) {
-            Produto produto = new Produto(rst.getInt(1), rst.getString(2), rst.getString(3));
-            produtos.add(produto);
+          Produto produto = new Produto(rst.getInt(1), rst.getString(2), rst.getString(3));
+          produtos.add(produto);
         }
       }
     }
     return produtos;
   }
+
+  public List<Produto> buscar(Categoria ct) throws SQLException {
+    List<Produto> produtos = new ArrayList<Produto>();
+    String sql = "SELECT ID, NOME PRODUTO, DESCRICAO FROM PRODUTO WHERE categoria_id = ?";
+    try (PreparedStatement pstm = connection.prepareStatement(sql)) {
+      pstm.setInt(1, ct.getID());
+      pstm.execute();
+      try (ResultSet rst = pstm.getResultSet()) {
+        while (rst.next()) {
+          Produto produto = new Produto(rst.getInt(1), rst.getString(2), rst.getString(3));
+          produtos.add(produto);
+        }
+
+      }
+    }
+    return produtos;
+  }
 }
+
