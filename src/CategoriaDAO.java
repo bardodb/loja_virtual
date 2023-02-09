@@ -34,6 +34,34 @@ public class CategoriaDAO {
       }
     return categorias;
     }
+
+    public List<Categoria> listarComProduto() throws SQLException {
+      Categoria ultima = null;
+      List<Categoria> categorias = new ArrayList<>();
+
+      String sql = "SELECT C.ID, C.nome, P.id, P.nome, P.descricao FROM categoria c inner join" +
+              " produto p on c.id = p.categoria_id";
+      try (PreparedStatement pstm = conecction.prepareStatement(sql)) {
+        pstm.execute();
+
+        try {
+          ResultSet rst = pstm.getResultSet();
+          while (rst.next()) {
+            if (ultima == null || !ultima.getNome().equals(rst.getString(2))) {
+              Categoria categoria = new Categoria(rst.getInt(1), rst.getString(2));
+              ultima = categoria;
+              categorias.add(categoria);
+            }
+            Produto produto = new Produto(rst.getInt(3), rst.getString(4), rst.getString(5));
+            ultima.adicionar(produto);
+          }
+        }
+        catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+      return categorias;
+    }
   }
 
 
